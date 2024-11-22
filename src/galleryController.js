@@ -137,7 +137,7 @@ document.querySelector('.gallery__modal').addEventListener('click', function (ev
 
 
 function searchImagesInBlock(image) {
-    const photosBlock = image.closest("#photos"); // Находим родительский блок с id "photos"
+    const photosBlock = image.closest(".photos"); // Находим родительский блок с id "photos"
     if (photosBlock) {
         const images = Array.from(photosBlock.querySelectorAll("img")); // Получаем все картинки в этом блоке
         const modalImage = document.getElementById("modal-image"); // Изображение в модальном окне
@@ -179,7 +179,7 @@ function searchImagesInBlock(image) {
 }
 
 // Пример использования:
-document.querySelectorAll("#photos img").forEach(img => {
+document.querySelectorAll(".photos img").forEach(img => {
     img.addEventListener("click", function () {
         searchImagesInBlock(this); // Вызываем функцию при клике на картинку
     });
