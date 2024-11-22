@@ -53,8 +53,8 @@
     
 ```twig
 <!-- на картинку добавить onclick="openGallery(this) -->
-<!-- На родительский блок в котором есть все картинки добавить id="photos" -->
-<div>
+<!-- На родительский блок в котором есть все картинки добавить class="photos" -->
+<div class="photos">
     {% for photo in photos %}
         <div>
             <img src="{{ photo | media }}" onclick="openGallery(this)">
