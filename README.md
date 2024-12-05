@@ -30,30 +30,55 @@
 <div id="modal" class="gallery__modal-container">
     <div id="modal-bg" class="gallery__background"></div>
     <div class="gallery__modal">
-        <div class="gallery__images">
-            <img id="modal-image" class="gallery__image" src="" alt="">
-        </div>
-
-        <button class="gallery__slide slide_left">
-            ...svg картинка (кнопка влево)
-        </button>
-        <button class="gallery__slide slide_right">
-            ...svg картинка (кнопка вправо)
-        </button>
 
         <button id="close-button" class="gallery__close-button" onclick="closeGallery()">
-            ...svg картинка (закрытие)
+            <svg xmlns="http://www.w3.org/2000/svg" class="gallery__svg" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </button>
+
+        <div class="gallery__container swiper">
+            <div class="swiper-button-prev gallery__left-btn">
+                <svg width="34px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="#000000"></path>
+                </svg>
+            </div>
+            <div class="gallery__slides">
+                <div class="slide-content slide-modal-gallery">
+
+                    <div class="swiper-wrapper gallery__images">
+                    
+                    </div>
+
+                </div>
+            </div>
+            <div class="swiper-button-next gallery__right-btn">
+                <svg width="34px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#000000"></path>
+                </svg>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script src="{{ 'assets/js/gallery.controller.js'|theme }}"></script>
 ```
 
     
 ```twig
-<!-- на картинку добавить onclick="openGallery(this) -->
-<!-- На родительский блок в котором есть все картинки добавить class="photos" -->
+<!-- на картинку добавить onclick="openGallery()"
+На родительский блок в котором есть все картинки добавить class="photos" 
+На странице, где находятся изображения добавить Swiper
+
+
+<link
+rel="stylesheet"
+href="{{ 'assets/css/swiper.css'|theme }}"
+/> 
+
+<script src="{{ 'assets/js/Swiper.js'|theme }}"></script> -->
+
 <div class="photos">
     {% for photo in photos %}
         <div>
@@ -65,7 +90,7 @@
 ```
 
 ```css
-.gallery__modal-container{position:fixed;inset:0;display:none;z-index:110}.gallery__background{position:absolute;inset:0;background-color:var(--black);opacity:0;transition:opacity 0.5s ease}.gallery__modal{position:relative;z-index:24;margin-left:auto;margin-right:auto;width:100%;height:100%}.gallery__images{width:100%;height:100%;display:flex;justify-content:center;align-items:center;padding:0}@media (min-width:768px){.gallery__images{padding:2rem}}.gallery__image{max-height:100%;width:100vw;cursor:default;object-fit:contain}@media (min-width:768px){.gallery__image{width:80vw}}@media (min-width:1280px){.gallery__image{width:60vw}}.gallery__slide{position:absolute;top:auto;bottom:1rem;transform:translateY(0);background-color:var(--white);border-radius:9999px;width:40px;height:40px;display:none;justify-content:center;align-items:center;border:1px solid var(--black);cursor:pointer;z-index:111}@media (min-width:768px){.gallery__slide{top:50%;bottom:auto;transform:translateY(-50%)}}.gallery__slide.slide_left{left:1rem}.gallery__slide.slide_right{right:1rem}.gallery__close-button{width:40px;height:40px;position:absolute;top:1rem;right:1rem;background-color:var(--white);color:var(--black);padding:.5rem;border-radius:50%;cursor:pointer}
+.gallery__modal-container{position:fixed;inset:0;display:none;z-index:110}.gallery__background{position:absolute;inset:0;background-color:var(--black);opacity:0;transition:opacity 0.5s ease}.gallery__modal{position:relative;z-index:24;margin-left:auto;margin-right:auto;width:100%;height:100%}.gallery__container{position:absolute;top:50%;transform:translateY(-50%);margin-left:auto;margin-right:auto;display:flex;width:100vw}.gallery__slides{width:100vw;display:flex;justify-content:center}.slide-modal-gallery{max-width:none;max-height:80vh}@media (min-width:1024px){.slide-modal-gallery{max-width:1024px}}.swiper-zoom-container{width:100%;height:100%;display:flex;justify-content:center}.gallery__image{height:100%;cursor:default;object-fit:contain}.gallery__left-btn,.gallery__right-btn{position:absolute;top:50%;bottom:auto;transform:translateY(-50%);background-color:var(--white);border-radius:10px;width:30px;height:30px;display:none;justify-content:center;align-items:center;border:1px solid var(--black);cursor:pointer;z-index:111}@media (min-width:640px){.gallery__left-btn,.gallery__right-btn{display:flex}}.gallery__left-btn{left:1rem}.gallery__right-btn{right:1rem}.gallery__close-button{width:40px;height:40px;position:absolute;top:1rem;right:1rem;background-color:#b91c1c;color:var(--black);padding:.5rem;border-radius:10px;cursor:pointer}
 
 ```
 
