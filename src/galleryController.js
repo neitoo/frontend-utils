@@ -59,6 +59,8 @@ function populateModalGallery(clickedImage) {
     modalGallery.innerHTML = ''; // Очищаем галерею
 
     const images = photosBlock.querySelectorAll('img');
+    let clickedIndex = 0;
+
     images.forEach((image, index) => {
         const slide = document.createElement('div');
         slide.classList.add('swiper-slide');
@@ -72,26 +74,47 @@ function populateModalGallery(clickedImage) {
         modalImage.alt = image.alt || `Image ${index + 1}`;
         modalImage.classList.add('gallery__image');
 
+        // Сравниваем кликнутое изображение с текущим
+        if (image === clickedImage) {
+            clickedIndex = index;
+        }
+
         zoomContainer.appendChild(modalImage); // Добавляем изображение в контейнер зума
         slide.appendChild(zoomContainer); // Добавляем контейнер зума в слайд
         modalGallery.appendChild(slide); // Добавляем слайд в галерею
     });
 
-    console.log(`${images.length} картинок добавлено в модальное окно.`);
-
     // Пересоздаем Swiper
-    initializeModalSwiper();
+    initializeModalSwiper(clickedIndex);
 }
 
+
 // Инициализация Swiper с поддержкой зума
-function initializeModalSwiper() {
+function initializeModalSwiper(initialIndex = 0) {
     if (modalSwiper) {
         modalSwiper.destroy(true, true); // Уничтожаем старый экземпляр Swiper
     }
 
+    const slides = document.querySelectorAll('.slide-modal-gallery .swiper-slide');
+    const navigationButtons = document.querySelectorAll('.gallery__right-btn, .gallery__left-btn');
+
+    // Если слайдов меньше или равно одному
+    if (slides.length <= 1) {
+        // Скрываем кнопки навигации
+        navigationButtons.forEach(button => button.style.display = 'none');
+
+        // Выходим из функции, т.к. Swiper не нужен
+        return;
+    } else {
+        // Если слайдов больше одного, показываем кнопки
+        navigationButtons.forEach(button => button.style.display = '');
+    }
+
+    // Инициализируем Swiper, если слайдов больше одного
     modalSwiper = new Swiper('.slide-modal-gallery', {
         speed: 500,
         loop: true,
+        initialSlide: initialIndex, // Указываем начальный слайд
         slidesPerView: 1,
         spaceBetween: 25,
         navigation: {
@@ -105,9 +128,3 @@ function initializeModalSwiper() {
         },
     });
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('#modal').addEventListener('show', function () {
-        // Галерея будет заполняться при вызове openGallery
-    });
-});
